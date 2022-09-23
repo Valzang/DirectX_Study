@@ -30,12 +30,18 @@
     <ClInclude Include="cMainGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cDeviceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX_Study.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="cMainGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cDeviceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

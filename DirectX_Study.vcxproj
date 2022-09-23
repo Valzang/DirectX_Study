@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cMainGame.h" />
     <ClInclude Include="DirectX_Study.h" />
     <ClInclude Include="framework.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cMainGame.cpp" />
     <ClCompile Include="DirectX_Study.cpp" />
   </ItemGroup>

@@ -13,6 +13,14 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
+
+#include <vector>
+#include <string>
+#include <list>
+#include <map>
+#include <set>
+#include <assert.h>
+
 #include <crtdbg.h>
 
 // For Debugging========================================================
@@ -32,3 +40,24 @@
 extern HWND g_hWnd;
 #define Safe_Release(p) {if(p) p->Release(); p = NULL ;}
 #define Safe_Delete(p) {if(p) delete p; p = NULL ;}
+
+#define SINGLETON(class_name) \
+					private : \
+						class_name(void); \
+						~class_name(void); \
+					public: \
+						static class_name* Instance() \
+						{ \
+							static class_name instance; \
+							return &instance; \
+						}
+
+
+struct ST_PC_VERTEX
+{
+	D3DXVECTOR3	pos;
+	D3DCOLOR	color;
+	enum { FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE };
+};
+
+#include "cDeviceManager.h"

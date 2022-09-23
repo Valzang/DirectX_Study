@@ -1,60 +1,103 @@
 #include "cMainGame.h"
 
 cMainGame::cMainGame()
-	: m_pD3D(NULL)
-	, m_pD3DDevice(NULL)
 {
 }
 
 cMainGame::~cMainGame()
 {
-	Safe_Release(m_pD3D);
-	Safe_Release(m_pD3DDevice);
+	g_pDeviceManager->Destroy();	
 }
 
 void cMainGame::SetUp()
 {
-	m_pD3D = Direct3DCreate9(D3D_SDK_VERSION);
+	SetUp_Line();
+	SetUp_Triangle();
 
-	D3DCAPS9	stCaps;
-	int			nVertexProcessing;
-	m_pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &stCaps);
-
-	// 하드웨어가 지원해준다면 GPU를 사용하고, 지원 못해준다면 CPU를 사용하겠다.
-	if (stCaps.DevCaps & D3DDEVCAPS_HWTRANSFORMANDLIGHT)
-		nVertexProcessing = D3DCREATE_HARDWARE_VERTEXPROCESSING;
-	else
-		nVertexProcessing = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
-
-	D3DPRESENT_PARAMETERS stD3DPP;
-	ZeroMemory(&stD3DPP, sizeof(D3DPRESENT_PARAMETERS));
-	stD3DPP.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	stD3DPP.Windowed = true;
-	stD3DPP.BackBufferFormat = D3DFMT_UNKNOWN;
-	stD3DPP.EnableAutoDepthStencil = true;
-	stD3DPP.AutoDepthStencilFormat = D3DFMT_D16;
-
-	m_pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL,
-						 g_hWnd, nVertexProcessing, &stD3DPP, &m_pD3DDevice);
+	// 조명 끄기
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
 
 void cMainGame::Update()
 {
+	RECT rc;
+	GetClientRect(g_hWnd, &rc);
+
+	// 눈의 위치
+	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, -5.0f);
+	// 보는 방향
+	D3DXVECTOR3 vLookAt = D3DXVECTOR3(0, 0, 0);
+	// 위쪽은 어디?
+	D3DXVECTOR3 vUp = D3DXVECTOR3(0, 1, 0);
+	D3DXMATRIXA16 matView;
+	D3DXMatrixLookAtLH(&matView, &vEye, &vLookAt, &vUp);
+	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+
+
+	D3DXMATRIXA16 matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f,
+							   (float)rc.right / (float)rc.bottom, 
+							   1.0f, 1000.0f);
+	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
 void cMainGame::Render()
 {
 	// 화면 지우기
-	m_pD3DDevice->Clear(NULL, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+	g_pD3DDevice->Clear(NULL, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
 						D3DCOLOR_XRGB(100,100,205), 1.0f, 0);
 
 	// 새로 그리기
-	m_pD3DDevice->BeginScene();
+	g_pD3DDevice->BeginScene();
+
+	Draw_Line();
+	Draw_Triangle();
 
 	// 그리기 끝
-	m_pD3DDevice->EndScene();
+	g_pD3DDevice->EndScene();
 
 
 	// 그린 거 넘겨주기
-	m_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+	g_pD3DDevice->Present(NULL, NULL, NULL, NULL);
+}
+
+void cMainGame::SetUp_Line()
+{
+	ST_PC_VERTEX v;
+	v.color = D3DCOLOR_XRGB(255, 0, 0);
+	v.pos = D3DXVECTOR3(0, 2, 0);	m_vecLineVertex.push_back(v);
+	v.pos = D3DXVECTOR3(0, -2, 0);	m_vecLineVertex.push_back(v);
+}
+
+void cMainGame::SetUp_Triangle()
+{
+	ST_PC_VERTEX v;
+	v.color = D3DCOLOR_XRGB(255, 0, 0);	v.pos = D3DXVECTOR3(-1, -1, 0); 
+	m_vecTriangleVertex.push_back(v);
+	v.color = D3DCOLOR_XRGB(0, 255, 0); v.pos = D3DXVECTOR3(-1, 1, 0); 
+	m_vecTriangleVertex.push_back(v);
+	v.color = D3DCOLOR_XRGB(0, 0, 255); v.pos = D3DXVECTOR3(1, 1, 0); 
+	m_vecTriangleVertex.push_back(v);
+}
+
+void cMainGame::Draw_Line()
+{
+	D3DXMATRIXA16		matWorld;
+	D3DXMatrixIdentity(&matWorld);
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);
+	g_pD3DDevice->DrawPrimitiveUP(D3DPT_LINELIST, m_vecLineVertex.size() / 2,
+								  &m_vecLineVertex[0], sizeof(ST_PC_VERTEX));
+}
+
+void cMainGame::Draw_Triangle()
+{
+	D3DXMATRIXA16		matWorld;
+	D3DXMatrixIdentity(&matWorld);
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);
+	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecTriangleVertex.size() / 3,
+								  &m_vecTriangleVertex[0], sizeof(ST_PC_VERTEX));
 }

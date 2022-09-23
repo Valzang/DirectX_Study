@@ -1,11 +1,15 @@
 #pragma once
 #include "framework.h"
 
+using namespace std;
+
+
 class cMainGame
 {
 private:
-	LPDIRECT3D9			m_pD3D;// DirectX 관련
-	LPDIRECT3DDEVICE9	m_pD3DDevice;	// DirectX의 장치 관련
+	vector<ST_PC_VERTEX>	m_vecLineVertex;
+	vector<ST_PC_VERTEX>	m_vecTriangleVertex;
+
 
 public:
 	cMainGame();
@@ -14,6 +18,11 @@ public:
 	void SetUp();
 	void Update();
 	void Render();
+
+	void SetUp_Line();
+	void SetUp_Triangle();
+	void Draw_Line();
+	void Draw_Triangle();
 
 };
 
