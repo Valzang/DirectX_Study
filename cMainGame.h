@@ -1,14 +1,18 @@
 #pragma once
 #include "framework.h"
+#include "cCubePC.h"
+#include "cGrid.h"
 
-using namespace std;
-
+class cCubePC;
+class cGrid;
 
 class cMainGame
 {
 private:
 	vector<ST_PC_VERTEX>	m_vecLineVertex;
 	vector<ST_PC_VERTEX>	m_vecTriangleVertex;
+	cCubePC*				m_pCubePC;		// 6면체 그리기
+	cGrid*					m_pGrid;		// 격자 그리기
 
 
 public:

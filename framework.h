@@ -37,6 +37,8 @@
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
 
+using namespace std;
+
 extern HWND g_hWnd;
 #define Safe_Release(p) {if(p) p->Release(); p = NULL ;}
 #define Safe_Delete(p) {if(p) delete p; p = NULL ;}

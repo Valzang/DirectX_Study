@@ -1,18 +1,28 @@
 #include "cMainGame.h"
 
 cMainGame::cMainGame()
+	: m_pCubePC(NULL)
+	, m_pGrid(NULL)
 {
 }
 
 cMainGame::~cMainGame()
 {
-	g_pDeviceManager->Destroy();	
+	Safe_Delete(m_pGrid);
+	Safe_Delete(m_pCubePC);
+	g_pDeviceManager->Destroy();		
 }
 
 void cMainGame::SetUp()
 {
 	SetUp_Line();
 	SetUp_Triangle();
+
+	m_pCubePC = new cCubePC;
+	m_pCubePC->SetUp();
+
+	m_pGrid = new cGrid;
+	m_pGrid->SetUp();
 
 	// 조명 끄기
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
@@ -22,7 +32,7 @@ void cMainGame::Update()
 {
 	RECT rc;
 	GetClientRect(g_hWnd, &rc);
-
+	
 	// 눈의 위치
 	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, -5.0f);
 	// 보는 방향
@@ -32,27 +42,38 @@ void cMainGame::Update()
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &vEye, &vLookAt, &vUp);
 	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-
-
+	
+	
 	D3DXMATRIXA16 matProj;
 	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f,
 							   (float)rc.right / (float)rc.bottom, 
 							   1.0f, 1000.0f);
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
+	if (m_pCubePC)
+		m_pCubePC->Update();
 }
 
 void cMainGame::Render()
 {
 	// 화면 지우기
 	g_pD3DDevice->Clear(NULL, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-						D3DCOLOR_XRGB(100,100,205), 1.0f, 0);
+						D3DCOLOR_XRGB(200,200,205), 1.0f, 0);
 
 	// 새로 그리기
 	g_pD3DDevice->BeginScene();
 
-	Draw_Line();
-	Draw_Triangle();
+	if (m_pCubePC)
+		m_pCubePC->Render();
 
+	if (m_pGrid)
+		m_pGrid->Render();
+	
+
+	// 선 & 삼각형 그리기 ===============================================
+	//Draw_Line();
+	//Draw_Triangle();
+	// ===============================================================
 	// 그리기 끝
 	g_pD3DDevice->EndScene();
 
