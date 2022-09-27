@@ -81,11 +81,11 @@ void cCubePC::Update()
 {
 	if (GetKeyState('A') & 0x8000)
 	{
-		m_fRotY -= 0.1f;
+		m_fRotY -= 0.05f;
 	}
 	if (GetKeyState('D') & 0x8000)
 	{
-		m_fRotY += 0.1f;
+		m_fRotY += 0.05f;
 	}
 
 	if (GetKeyState('W') & 0x8000)

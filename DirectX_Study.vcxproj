@@ -148,7 +148,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCubeNode.h" />
     <ClInclude Include="cCubePC.h" />
+    <ClInclude Include="cCubePNT.h" />
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cGizmo.h" />
     <ClInclude Include="cGrid.h" />
@@ -159,7 +162,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCubeNode.cpp" />
     <ClCompile Include="cCubePC.cpp" />
+    <ClCompile Include="cCubePNT.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cGizmo.cpp" />
     <ClCompile Include="cGrid.cpp" />

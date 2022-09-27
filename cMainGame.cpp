@@ -3,6 +3,7 @@
 cMainGame::cMainGame()
 	: m_pCubePC(NULL)
 	, m_pGrid(NULL)
+	, m_pCamera(NULL)
 {
 }
 
@@ -10,6 +11,7 @@ cMainGame::~cMainGame()
 {
 	Safe_Delete(m_pGrid);
 	Safe_Delete(m_pCubePC);
+	Safe_Delete(m_pCamera);	
 	g_pDeviceManager->Destroy();		
 }
 
@@ -24,32 +26,19 @@ void cMainGame::SetUp()
 	m_pGrid = new cGrid;
 	m_pGrid->SetUp();
 
+	m_pCamera = new cCamera;
+	m_pCamera->SetUp(&m_pCubePC->GetPosition());
+
 	// 조명 끄기
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
 
 void cMainGame::Update()
-{
-	RECT rc;
-	GetClientRect(g_hWnd, &rc);
-	
-	// 눈의 위치
-	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, -5.0f);
-	// 보는 방향
-	D3DXVECTOR3 vLookAt = D3DXVECTOR3(0, 0, 0);
-	// 위쪽은 어디?
-	D3DXVECTOR3 vUp = D3DXVECTOR3(0, 1, 0);
-	D3DXMATRIXA16 matView;
-	D3DXMatrixLookAtLH(&matView, &vEye, &vLookAt, &vUp);
-	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-	
-	
-	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f,
-							   (float)rc.right / (float)rc.bottom, 
-							   1.0f, 1000.0f);
-	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
-
+{	
+	if (m_pCubePC)
+		m_pCubePC->Update();
+	if (m_pCamera)
+		m_pCamera->Update();
 	if (m_pCubePC)
 		m_pCubePC->Update();
 }
@@ -121,4 +110,10 @@ void cMainGame::Draw_Triangle()
 	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecTriangleVertex.size() / 3,
 								  &m_vecTriangleVertex[0], sizeof(ST_PC_VERTEX));
+}
+
+void cMainGame::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	if (m_pCamera)
+		m_pCamera->WndProc(hWnd, message, wParam, lParam);
 }
