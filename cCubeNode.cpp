@@ -16,6 +16,7 @@ cCubeNode::~cCubeNode()
 void cCubeNode::AddChild(cCubeNode* pChild)
 {
 	pChild->m_pParentWorldTM = &m_matWorldTM;
+	m_vecChild.push_back(pChild);
 }
 
 void cCubeNode::Destroy()

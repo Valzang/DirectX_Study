@@ -4,6 +4,7 @@ cMainGame::cMainGame()
 	: m_pCubePC(NULL)
 	, m_pGrid(NULL)
 	, m_pCamera(NULL)
+	, m_pCubeMan(NULL)
 {
 }
 
@@ -12,6 +13,7 @@ cMainGame::~cMainGame()
 	Safe_Delete(m_pGrid);
 	Safe_Delete(m_pCubePC);
 	Safe_Delete(m_pCamera);	
+	Safe_Delete(m_pCubeMan);
 	g_pDeviceManager->Destroy();		
 }
 
@@ -23,13 +25,18 @@ void cMainGame::SetUp()
 	m_pCubePC = new cCubePC;
 	m_pCubePC->SetUp();
 
+	m_pCubeMan = new cCubeMan;
+	m_pCubeMan->SetUp();
+
 	m_pGrid = new cGrid;
 	m_pGrid->SetUp();
 
 	m_pCamera = new cCamera;
-	m_pCamera->SetUp(&m_pCubePC->GetPosition());
+	m_pCamera->SetUp(&m_pCubeMan->GetPosition());
 
 	// 조명 끄기
+	SetUp_Light();
+
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
 
@@ -37,10 +44,13 @@ void cMainGame::Update()
 {	
 	if (m_pCubePC)
 		m_pCubePC->Update();
+
+	if (m_pCubeMan)
+		m_pCubeMan->Update();
+
 	if (m_pCamera)
 		m_pCamera->Update();
-	if (m_pCubePC)
-		m_pCubePC->Update();
+	
 }
 
 void cMainGame::Render()
@@ -52,8 +62,11 @@ void cMainGame::Render()
 	// 새로 그리기
 	g_pD3DDevice->BeginScene();
 
-	if (m_pCubePC)
-		m_pCubePC->Render();
+	//if (m_pCubePC)
+	//	m_pCubePC->Render();
+
+	if (m_pCubeMan)
+		m_pCubeMan->Render();
 
 	if (m_pGrid)
 		m_pGrid->Render();
@@ -116,4 +129,20 @@ void cMainGame::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	if (m_pCamera)
 		m_pCamera->WndProc(hWnd, message, wParam, lParam);
+}
+
+void cMainGame::SetUp_Light()
+{
+	D3DLIGHT9 stLight;
+	ZeroMemory(&stLight, sizeof(D3DLIGHT9));
+	stLight.Type = D3DLIGHT_DIRECTIONAL;
+	stLight.Ambient = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
+	stLight.Diffuse = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
+	stLight.Specular = D3DXCOLOR(0.8f, 0.8f, 0.8f, 1.0f);
+
+	D3DXVECTOR3 vDir(1.0f, -1.0f, 1.0f);
+	D3DXVec3Normalize(&vDir, &vDir);
+	stLight.Direction = vDir;
+	g_pD3DDevice->SetLight(0, &stLight);
+	g_pD3DDevice->LightEnable(0, true);
 }

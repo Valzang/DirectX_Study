@@ -54,6 +54,30 @@
     <ClInclude Include="cCubeNode.h">
       <Filter>CubeMan</Filter>
     </ClInclude>
+    <ClInclude Include="cCharacter.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cCubeMan.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cBody.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cHead.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cLeftArm.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cLeftLeg.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cRightLeg.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
+    <ClInclude Include="cRightArm.h">
+      <Filter>CubeMan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX_Study.cpp">
@@ -81,6 +105,30 @@
       <Filter>CubeMan</Filter>
     </ClCompile>
     <ClCompile Include="cCubeNode.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cCharacter.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cCubeMan.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cBody.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cHead.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cLeftArm.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cLeftLeg.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cRightArm.cpp">
+      <Filter>CubeMan</Filter>
+    </ClCompile>
+    <ClCompile Include="cRightLeg.cpp">
       <Filter>CubeMan</Filter>
     </ClCompile>
   </ItemGroup>

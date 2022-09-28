@@ -81,20 +81,20 @@ void cCubePC::Update()
 {
 	if (GetKeyState('A') & 0x8000)
 	{
-		m_fRotY -= 0.05f;
+		m_fRotY -= 0.1f;
 	}
 	if (GetKeyState('D') & 0x8000)
 	{
-		m_fRotY += 0.05f;
+		m_fRotY += 0.1f;
 	}
 
 	if (GetKeyState('W') & 0x8000)
 	{
-		m_vPosition += (m_vDirection * 0.1f);
+		m_vPosition += (m_vDirection * 0.2f);
 	}
 	if (GetKeyState('S') & 0x8000)
 	{
-		m_vPosition -= (m_vDirection * 0.1f);
+		m_vPosition -= (m_vDirection * 0.2f);
 	}
 
 	RECT rc;
