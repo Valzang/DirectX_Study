@@ -8,12 +8,17 @@ protected:
 	D3DXMATRIXA16		m_matLocalTM;
 	D3DXMATRIXA16		m_matWorldTM;
 	vector<cCubeNode*>	m_vecChild;
+
+	Synthesize(D3DXMATRIXA16*, m_pParentWorldTM, ParentWorldTM);
+	Synthesize(float, m_fRotDeltaX, RotDeltaX);
+
+	float m_fRotX;
+
 public :
 	cCubeNode();
 	virtual ~cCubeNode();
 
-	Synthesize(D3DXMATRIXA16*, m_pParentWorldTM, ParentWorldTM);
-	Synthesize(float, m_fRotDeltaX, RotDeltaX);
+	
 
 	virtual void AddChild(cCubeNode* pChild);
 	virtual void Destroy();

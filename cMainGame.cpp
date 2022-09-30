@@ -1,10 +1,13 @@
 #include "cMainGame.h"
 
+
+
 cMainGame::cMainGame()
 	: m_pCubePC(NULL)
 	, m_pGrid(NULL)
 	, m_pCamera(NULL)
 	, m_pCubeMan(NULL)
+	, m_pTexture(NULL)
 {
 }
 
@@ -14,6 +17,7 @@ cMainGame::~cMainGame()
 	Safe_Delete(m_pCubePC);
 	Safe_Delete(m_pCamera);	
 	Safe_Delete(m_pCubeMan);
+	Safe_Release(m_pTexture);
 	g_pDeviceManager->Destroy();		
 }
 
@@ -33,6 +37,8 @@ void cMainGame::SetUp()
 
 	m_pCamera = new cCamera;
 	m_pCamera->SetUp(&m_pCubeMan->GetPosition());
+
+	SetUp_Texture();
 
 	// 조명 끄기
 	SetUp_Light();
@@ -62,14 +68,17 @@ void cMainGame::Render()
 	// 새로 그리기
 	g_pD3DDevice->BeginScene();
 
+	if (m_pGrid)
+		m_pGrid->Render();
+
 	//if (m_pCubePC)
 	//	m_pCubePC->Render();
 
 	if (m_pCubeMan)
 		m_pCubeMan->Render();
 
-	if (m_pGrid)
-		m_pGrid->Render();
+	Draw_Texture();
+
 	
 
 	// 선 & 삼각형 그리기 ===============================================
@@ -145,4 +154,53 @@ void cMainGame::SetUp_Light()
 	stLight.Direction = vDir;
 	g_pD3DDevice->SetLight(0, &stLight);
 	g_pD3DDevice->LightEnable(0, true);
+}
+
+void cMainGame::SetUp_Texture()
+{
+	D3DXCreateTextureFromFile(g_pD3DDevice, L"IU.png", &m_pTexture);
+	ST_PT_VERTEX v;
+	v.pos = D3DXVECTOR3(0, 0, 0);
+	v.texture = D3DXVECTOR2(0, 1);
+	m_vecVertex.push_back(v);
+
+	v.pos = D3DXVECTOR3(0, 2, 0);
+	v.texture = D3DXVECTOR2(0, 0);
+	m_vecVertex.push_back(v);
+
+	v.pos = D3DXVECTOR3(2, 2, 0);
+	v.texture = D3DXVECTOR2(1, 0);
+	m_vecVertex.push_back(v);
+	// >>
+	v.pos = D3DXVECTOR3(0, 0, 0);
+	v.texture = D3DXVECTOR2(0, 1);
+	m_vecVertex.push_back(v);
+
+	v.pos = D3DXVECTOR3(-2, 2, 0);
+	v.texture = D3DXVECTOR2(1, 0);
+	m_vecVertex.push_back(v);
+
+	v.pos = D3DXVECTOR3(0, 2, 0);
+	v.texture = D3DXVECTOR2(0, 0);
+	m_vecVertex.push_back(v);
+}
+
+void cMainGame::Draw_Texture()
+{
+	if (g_pD3DDevice)
+	{
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);	
+
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+
+		g_pD3DDevice->SetTexture(0, m_pTexture);
+		g_pD3DDevice->SetFVF(ST_PT_VERTEX::FVF);
+
+		g_pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLELIST, m_vecVertex.size() / 3, 
+											 &m_vecVertex[0], sizeof(ST_PT_VERTEX));
+
+		g_pD3DDevice->SetTexture(0, NULL);
+	}
 }

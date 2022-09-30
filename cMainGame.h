@@ -23,6 +23,9 @@ private:
 	cCamera*				m_pCamera;
 	cCubeMan*				m_pCubeMan;
 
+	LPDIRECT3DTEXTURE9		m_pTexture;
+	vector<ST_PT_VERTEX>	m_vecVertex;
+
 
 public:
 	cMainGame();
@@ -40,6 +43,8 @@ public:
 	void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void SetUp_Light();
+	void SetUp_Texture();
+	void Draw_Texture();
 
 };
 
