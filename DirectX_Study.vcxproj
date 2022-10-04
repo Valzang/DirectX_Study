@@ -158,12 +158,17 @@
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cGizmo.h" />
     <ClInclude Include="cGrid.h" />
+    <ClInclude Include="cGroup.h" />
     <ClInclude Include="cHead.h" />
     <ClInclude Include="cLeftArm.h" />
     <ClInclude Include="cLeftLeg.h" />
     <ClInclude Include="cMainGame.h" />
+    <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cObject.h" />
+    <ClInclude Include="cObjectManager.h" />
     <ClInclude Include="cRightArm.h" />
     <ClInclude Include="cRightLeg.h" />
+    <ClInclude Include="cTextureManager.h" />
     <ClInclude Include="DirectX_Study.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Resource.h" />
@@ -180,12 +185,17 @@
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cGizmo.cpp" />
     <ClCompile Include="cGrid.cpp" />
+    <ClCompile Include="cGroup.cpp" />
     <ClCompile Include="cHead.cpp" />
     <ClCompile Include="cLeftArm.cpp" />
     <ClCompile Include="cLeftLeg.cpp" />
     <ClCompile Include="cMainGame.cpp" />
+    <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cObject.cpp" />
+    <ClCompile Include="cObjectManager.cpp" />
     <ClCompile Include="cRightArm.cpp" />
     <ClCompile Include="cRightLeg.cpp" />
+    <ClCompile Include="cTextureManager.cpp" />
     <ClCompile Include="DirectX_Study.cpp" />
   </ItemGroup>
   <ItemGroup>
