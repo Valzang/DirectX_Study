@@ -8,7 +8,7 @@ protected:
 
 public:
 	cObject();
-	~cObject();
+	virtual ~cObject();
 
 	virtual void AddRef();
 	virtual void Release();

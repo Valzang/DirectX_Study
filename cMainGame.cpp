@@ -36,8 +36,8 @@ cMainGame::~cMainGame()
 	for (auto p : m_vecGroup)
 	{
 		Safe_Release(p);
-	}
-	m_vecGroup.clear();
+	}	
+	m_vecGroup.clear();	
 
 	g_pObjectManager->Destroy();
 	g_pTextureManager->Destroy();

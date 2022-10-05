@@ -9,6 +9,6 @@ private:
 
 public:
 	cMtlTex();
-	~cMtlTex();
+	virtual ~cMtlTex();
 };
 

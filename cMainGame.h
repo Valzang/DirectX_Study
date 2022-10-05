@@ -8,10 +8,6 @@ class cCubeMan;
 
 class cBody;
 class cHead;
-//class cLeftArm;
-//class cRightArm;
-//class cLeftLeg;
-//class cRightLeg;
 class cGroup;
 class cObjLoader;
 

@@ -120,6 +120,7 @@ void cObjLoader::Load(OUT vector<cGroup*>& vecGroup, IN char* szFolder, IN char*
 
 	fclose(fp);
 
+
 	for (auto it : m_mapMtlTex)
 	{
 		Safe_Release(it.second);
