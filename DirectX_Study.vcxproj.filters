@@ -96,6 +96,9 @@
     <ClInclude Include="cMtlTex.h">
       <Filter>Obj</Filter>
     </ClInclude>
+    <ClInclude Include="cObjLoader.h">
+      <Filter>Obj</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX_Study.cpp">
@@ -162,6 +165,9 @@
       <Filter>Obj</Filter>
     </ClCompile>
     <ClCompile Include="cMtlTex.cpp">
+      <Filter>Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjLoader.cpp">
       <Filter>Obj</Filter>
     </ClCompile>
   </ItemGroup>

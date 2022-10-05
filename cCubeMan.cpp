@@ -9,7 +9,7 @@
 
 cCubeMan::cCubeMan()
 	: m_pRoot(NULL)
-	, m_pTexture(NULL)
+	, m_pTexture(NULL)	
 {
 }
 

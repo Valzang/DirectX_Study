@@ -8,6 +8,7 @@ cGroup::cGroup()
 
 cGroup::~cGroup()
 {
+	Safe_Release(m_pMtlTex);
 }
 
 void cGroup::Render()

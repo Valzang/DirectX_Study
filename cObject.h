@@ -4,7 +4,7 @@
 class cObject
 {
 protected:
-	ULONG	m_ulRefCount;
+	LONG	m_ulRefCount;
 
 public:
 	cObject();

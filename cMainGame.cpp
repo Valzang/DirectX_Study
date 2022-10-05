@@ -1,5 +1,19 @@
 #include "cMainGame.h"
+#include "cCubePC.h"
+#include "cGrid.h"
+#include "cCamera.h"
+#include "cCubeNode.h"
 
+#include "cCubeMan.h"
+#include "cBody.h"
+#include "cHead.h"
+#include "cLeftArm.h"
+#include "cRightArm.h"
+#include "cLeftLeg.h"
+#include "cRightLeg.h"
+#include "cGroup.h"
+
+#include "cObjLoader.h"
 
 
 cMainGame::cMainGame()
@@ -18,6 +32,15 @@ cMainGame::~cMainGame()
 	Safe_Delete(m_pCamera);	
 	Safe_Delete(m_pCubeMan);
 	Safe_Release(m_pTexture);
+
+	for (auto p : m_vecGroup)
+	{
+		Safe_Release(p);
+	}
+	m_vecGroup.clear();
+
+	g_pObjectManager->Destroy();
+	g_pTextureManager->Destroy();
 	g_pDeviceManager->Destroy();		
 }
 
@@ -42,6 +65,8 @@ void cMainGame::SetUp()
 
 	// Α¶Έν ²τ±β
 	SetUp_Light();
+
+	SetUp_Obj();
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
@@ -77,7 +102,8 @@ void cMainGame::Render()
 	if (m_pCubeMan)
 		m_pCubeMan->Render();
 
-	Draw_Texture();
+	//Draw_Texture();
+	Draw_Obj();
 
 	
 
@@ -202,5 +228,25 @@ void cMainGame::Draw_Texture()
 											 &m_vecVertex[0], sizeof(ST_PT_VERTEX));
 
 		g_pD3DDevice->SetTexture(0, NULL);
+	}
+}
+
+void cMainGame::SetUp_Obj()
+{
+	cObjLoader loader;
+	loader.Load(m_vecGroup, (char*)"obj", (char*)"box.obj");
+}
+
+void cMainGame::Draw_Obj()
+{
+	D3DXMATRIXA16 matWorld, matS, matR;
+	D3DXMatrixScaling(&matS, 0.1f, 0.1f, 0.1f);
+	D3DXMatrixRotationX(&matR, -D3DX_PI / 2.0f);
+	matWorld = matS * matR;
+
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	for (auto p : m_vecGroup)
+	{
+		p->Render();
 	}
 }

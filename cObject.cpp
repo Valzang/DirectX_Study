@@ -19,6 +19,6 @@ void cObject::AddRef()
 void cObject::Release()
 {
 	--m_ulRefCount;
-	if (m_ulRefCount == 0)
+	if (m_ulRefCount <= 0)
 		delete this;
 }
