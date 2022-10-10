@@ -19,6 +19,12 @@
     <Filter Include="Obj">
       <UniqueIdentifier>{0fadd50b-06b6-47c4-91db-3eaef118a14b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{a89d80b1-729c-48cd-b2e2-1b50d8b913a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeightMap">
+      <UniqueIdentifier>{2c9283f8-5ae1-4b31-9ab0-c90c7c890356}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -99,6 +105,15 @@
     <ClInclude Include="cObjLoader.h">
       <Filter>Obj</Filter>
     </ClInclude>
+    <ClInclude Include="iMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="cHeightMap.h">
+      <Filter>HeightMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX_Study.cpp">
@@ -169,6 +184,15 @@
     </ClCompile>
     <ClCompile Include="cObjLoader.cpp">
       <Filter>Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="iMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="cHeightMap.cpp">
+      <Filter>HeightMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

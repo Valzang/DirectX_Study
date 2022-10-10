@@ -9,6 +9,7 @@ cObjLoader::cObjLoader()
 
 cObjLoader::~cObjLoader()
 {
+	
 }
 
 void cObjLoader::Load(OUT vector<cGroup*>& vecGroup, IN char* szFolder, IN char* szFile)
@@ -58,6 +59,7 @@ void cObjLoader::Load(OUT vector<cGroup*>& vecGroup, IN char* szFolder, IN char*
 					{
 						cGroup* pGroup = new cGroup;
 						pGroup->SetVertex(vecVertex);
+						// 여기서 메모리 릭
 						pGroup->SetMtlTex(m_mapMtlTex[sMtlName]);
 						vecGroup.push_back(pGroup);
 						vecVertex.clear();
@@ -209,5 +211,69 @@ void cObjLoader::LoadMtlLib(char* szFolder, char* szFile)
 			}
 		}
 
+	}
+}
+
+void cObjLoader::LoadSurface(OUT vector<D3DXVECTOR3>& vecSurface, IN char* szFolder, IN char* szFile, IN D3DXMATRIXA16* pmat)
+{
+	vector<D3DXVECTOR3> vecV;
+
+	vector<ST_PNT_VERTEX> vecVertex;
+
+	string sFullPath(szFolder);
+	sFullPath += (string("/") + string(szFile));
+
+	// C 스타일로 파일 열기
+	FILE* fp;
+	fopen_s(&fp, sFullPath.c_str(), "r");
+
+	string sMtlName;
+
+	while (1)
+	{
+		if (feof(fp))
+			break;
+		char szTemp[1024];
+		fgets(szTemp, 1024, fp);
+
+		if (szTemp[0] == '#')
+			continue;
+		else
+		{
+			switch (szTemp[0])
+			{
+				case 'v':
+					if (szTemp[1])
+					{
+						float x, y, z;
+						sscanf_s(szTemp, "%*s %f %f %f", &x, &y, &z);
+						vecV.push_back(D3DXVECTOR3(x, y, z));
+					}
+					break;
+				break;
+				case 'f':
+				{
+					int nIndex[3];
+					sscanf_s(szTemp, "%*s %d/%*d/%*d %d/%*d/%*d %d/%*d/%*d",
+							 &nIndex[0], &nIndex[1], &nIndex[2]);
+
+					for (int i = 0; i < 3; ++i)
+					{
+						vecSurface.push_back(vecV[nIndex[i]-1]);
+					}
+				}
+				break;
+			}
+		}
+	}
+
+	fclose(fp);
+
+	if (pmat)
+	{
+		for (UINT i = 0; i < vecSurface.size(); ++i)
+		{
+			D3DXVec3TransformCoord(&vecSurface[i], &vecSurface[i], pmat);
+		}
 	}
 }

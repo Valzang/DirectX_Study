@@ -160,6 +160,7 @@
     <ClInclude Include="cGrid.h" />
     <ClInclude Include="cGroup.h" />
     <ClInclude Include="cHead.h" />
+    <ClInclude Include="cHeightMap.h" />
     <ClInclude Include="cLeftArm.h" />
     <ClInclude Include="cLeftLeg.h" />
     <ClInclude Include="cMainGame.h" />
@@ -167,11 +168,13 @@
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectManager.h" />
     <ClInclude Include="cObjLoader.h" />
+    <ClInclude Include="cObjMap.h" />
     <ClInclude Include="cRightArm.h" />
     <ClInclude Include="cRightLeg.h" />
     <ClInclude Include="cTextureManager.h" />
     <ClInclude Include="DirectX_Study.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="iMap.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -188,6 +191,7 @@
     <ClCompile Include="cGrid.cpp" />
     <ClCompile Include="cGroup.cpp" />
     <ClCompile Include="cHead.cpp" />
+    <ClCompile Include="cHeightMap.cpp" />
     <ClCompile Include="cLeftArm.cpp" />
     <ClCompile Include="cLeftLeg.cpp" />
     <ClCompile Include="cMainGame.cpp" />
@@ -195,10 +199,12 @@
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectManager.cpp" />
     <ClCompile Include="cObjLoader.cpp" />
+    <ClCompile Include="cObjMap.cpp" />
     <ClCompile Include="cRightArm.cpp" />
     <ClCompile Include="cRightLeg.cpp" />
     <ClCompile Include="cTextureManager.cpp" />
     <ClCompile Include="DirectX_Study.cpp" />
+    <ClCompile Include="iMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DirectX_Study.rc" />

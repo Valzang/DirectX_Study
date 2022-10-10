@@ -1,5 +1,4 @@
 #pragma once
-#include "framework.h"
 
 class cCubePC;
 class cGrid;
@@ -26,6 +25,9 @@ private:
 	LPDIRECT3DTEXTURE9		m_pTexture;
 	vector<ST_PT_VERTEX>	m_vecVertex;
 
+	iMap*					m_pMap;
+	vector<cGroup*>			m_vecMap;
+
 
 public:
 	cMainGame();
@@ -48,6 +50,13 @@ public:
 
 	void SetUp_Obj();
 	void Draw_Obj();
+
+	void SetUp_Map();	
+	void Draw_Map();
+	void SetUp_Surface();
+
+	void SetUp_HeightMap();
+	void Draw_HeightMap();
 
 };
 

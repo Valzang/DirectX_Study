@@ -1,3 +1,4 @@
+#include "framework.h"
 #include "cMainGame.h"
 #include "cCubePC.h"
 #include "cGrid.h"
@@ -14,6 +15,8 @@
 #include "cGroup.h"
 
 #include "cObjLoader.h"
+#include "cObjMap.h"
+#include "cHeightMap.h"
 
 
 cMainGame::cMainGame()
@@ -22,6 +25,7 @@ cMainGame::cMainGame()
 	, m_pCamera(NULL)
 	, m_pCubeMan(NULL)
 	, m_pTexture(NULL)
+	, m_pMap(NULL)
 {
 }
 
@@ -32,12 +36,19 @@ cMainGame::~cMainGame()
 	Safe_Delete(m_pCamera);	
 	Safe_Delete(m_pCubeMan);
 	Safe_Release(m_pTexture);
+	Safe_Delete(m_pMap);
 
 	for (auto p : m_vecGroup)
 	{
 		Safe_Release(p);
 	}	
 	m_vecGroup.clear();	
+
+	for (auto p : m_vecMap)
+	{
+		Safe_Release(p);
+	}
+	m_vecMap.clear();
 
 	g_pObjectManager->Destroy();
 	g_pTextureManager->Destroy();
@@ -65,8 +76,12 @@ void cMainGame::SetUp()
 
 	// Α¶Έν ²τ±β
 	SetUp_Light();
-
 	SetUp_Obj();
+
+	SetUp_Map();
+	SetUp_Surface();
+
+	SetUp_HeightMap();
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 }
@@ -77,7 +92,7 @@ void cMainGame::Update()
 		m_pCubePC->Update();
 
 	if (m_pCubeMan)
-		m_pCubeMan->Update();
+		m_pCubeMan->Update(m_pMap);
 
 	if (m_pCamera)
 		m_pCamera->Update();
@@ -99,11 +114,16 @@ void cMainGame::Render()
 	//if (m_pCubePC)
 	//	m_pCubePC->Render();
 
+	if (m_pMap)
+		m_pMap->Render();
+
 	if (m_pCubeMan)
 		m_pCubeMan->Render();
 
 	//Draw_Texture();
-	Draw_Obj();
+	//Draw_Obj();
+	//Draw_Map();
+	//Draw_HeightMap();
 
 	
 
@@ -249,4 +269,47 @@ void cMainGame::Draw_Obj()
 	{
 		p->Render();
 	}
+}
+
+void cMainGame::SetUp_Map()
+{
+	cObjLoader loader;
+	loader.Load(m_vecMap, (char*)"obj", (char*)"map.obj");
+}
+
+void cMainGame::Draw_Map()
+{
+	D3DXMATRIXA16 matWorld, matS, matR;
+	D3DXMatrixScaling(&matS, 0.01f, 0.01f, 0.01f);
+	D3DXMatrixRotationX(&matR, -D3DX_PI / 2.0f);
+	matWorld = matS * matR;
+	
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	for (auto p : m_vecMap)
+	{
+		p->Render();
+	}
+}
+
+void cMainGame::SetUp_Surface()
+{
+	//D3DXMATRIXA16 matWorld, matS, matR;
+	//D3DXMatrixScaling(&matS, 0.01f, 0.01f, 0.01f);
+	//D3DXMatrixRotationX(&matR, -D3DX_PI / 2.0f);
+	//matWorld = matS * matR;
+	//
+	//m_pMap = new cObjMap((char*)"obj", (char*)"map_surface.obj", &matWorld);
+}
+
+void cMainGame::SetUp_HeightMap()
+{
+	cHeightMap* pMap = new cHeightMap;
+	pMap->SetUp((char*)"HeightMapData/", (char*)"HeightMap.raw", (char*)"terrain.jpg");
+	m_pMap = pMap;
+}
+
+void cMainGame::Draw_HeightMap()
+{
+	if (m_pMap)
+		m_pMap->Render();
 }

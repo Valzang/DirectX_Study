@@ -68,9 +68,9 @@ void cCubeMan::SetUp()
 
 }
 
-void cCubeMan::Update()
+void cCubeMan::Update(iMap* pMap)
 {
-	cCharacter::Update();
+	cCharacter::Update(pMap);
 
 	if (m_pRoot)
 		m_pRoot->Update();
