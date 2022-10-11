@@ -10,6 +10,8 @@ class cHead;
 class cGroup;
 class cObjLoader;
 
+class cFrustum;
+
 
 class cMainGame
 {
@@ -28,6 +30,11 @@ private:
 	iMap*					m_pMap;
 	vector<cGroup*>			m_vecMap;
 
+	LPD3DXMESH				m_pSphere;
+	vector<ST_SPHERE*>		m_vecCullingSphere;
+	D3DMATERIAL9			m_stCullingMtl;
+	cFrustum*				m_pFrustum;
+
 
 public:
 	cMainGame();
@@ -39,24 +46,27 @@ public:
 
 	void SetUp_Line();
 	void SetUp_Triangle();
-	void Draw_Line();
-	void Draw_Triangle();
+	void Render_Line();
+	void Render_Triangle();
 
 	void WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 	void SetUp_Light();
 	void SetUp_Texture();
-	void Draw_Texture();
+	void Render_Texture();
 
 	void SetUp_Obj();
-	void Draw_Obj();
+	void Render_Obj();
 
 	void SetUp_Map();	
-	void Draw_Map();
+	void Render_Map();
 	void SetUp_Surface();
 
 	void SetUp_HeightMap();
-	void Draw_HeightMap();
+	void Render_HeightMap();
 
+
+	void SetUp_Frustum();
+	void Render_Frustum();
 };
 

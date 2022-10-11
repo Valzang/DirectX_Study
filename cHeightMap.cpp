@@ -48,7 +48,7 @@ void cHeightMap::SetUp(char* szFolder, char* szRaw, char* szTex, DWORD dwBytePer
 	for (int i = 0; i < nNumVertex; ++i)
 	{
 		ST_PNT_VERTEX v;
-		v.pos = D3DXVECTOR3(i % nCol, ((unsigned char)fgetc(fp)) / 10.0f, i / nCol);
+		v.pos = D3DXVECTOR3((float)(i % nCol), ((unsigned char)fgetc(fp)) / 10.0f, (float)(i / nCol));
 		v.normal = D3DXVECTOR3(0, 1, 0);
 		v.texture = D3DXVECTOR2((i % nCol) / (float)nCol, (i / nCol) / (float)nCol);
 
@@ -168,8 +168,8 @@ bool cHeightMap::GetHeight(IN float x, OUT float& y, IN float z)
 
 	*/
 
-	int nX = x;
-	int nZ = z;
+	int nX = (int)x;
+	int nZ = (int)z;
 
 	float fDeltaX = x - nX;
 	float fDeltaZ = z - nZ;

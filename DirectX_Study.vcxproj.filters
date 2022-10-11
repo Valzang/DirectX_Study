@@ -25,6 +25,9 @@
     <Filter Include="HeightMap">
       <UniqueIdentifier>{2c9283f8-5ae1-4b31-9ab0-c90c7c890356}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrustumCulling">
+      <UniqueIdentifier>{3e00f1a1-8fb7-48b1-b0b6-05f51b02b854}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -114,6 +117,9 @@
     <ClInclude Include="cHeightMap.h">
       <Filter>HeightMap</Filter>
     </ClInclude>
+    <ClInclude Include="cFrustum.h">
+      <Filter>FrustumCulling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DirectX_Study.cpp">
@@ -193,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="cHeightMap.cpp">
       <Filter>HeightMap</Filter>
+    </ClCompile>
+    <ClCompile Include="cFrustum.cpp">
+      <Filter>FrustumCulling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
