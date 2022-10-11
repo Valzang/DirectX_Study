@@ -206,8 +206,7 @@ void cMainGame::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				sphere->isPicked = m_pFrustum->IsIn(sphere);
 			}
 			break;
-		}
-			
+		}			
 	}
 }
 
